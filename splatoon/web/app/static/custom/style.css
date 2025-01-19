@@ -1,0 +1,168 @@
+body {
+  background-color: #1e1e1e;
+}
+
+.rpgui-content {
+  overflow-y: scroll;
+}
+
+.text-right {
+  text-align: right;
+}
+
+/* For navbar buttons */
+button.hidden {
+  display: none;
+}
+
+/* For scoreboard */
+#scoreboard-container {
+  position: relative;
+
+  th {
+    &:nth-of-type(1) {
+      width: 80%;
+    }
+
+    &:nth-child(2) {
+      width: 20%;
+      text-align: right;
+    }
+  }
+}
+
+#scoreboard-data {
+  tr {
+    &.active {
+      background-color: #ffd70050;
+    }
+
+    td {
+      &:nth-of-type(1) {
+        width: 80%;
+        max-width: 0;
+        overflow: hidden;
+        text-wrap: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      &:nth-of-type(2) {
+        width: 20%;
+        text-align: right;
+      }
+    }
+  }
+}
+
+/* For homepage */
+#game-map-container {
+  position: relative;
+  text-align: center;
+}
+
+#inventory-container {
+  height: 582px;
+  position: relative;
+}
+
+#messages-container {
+  position: relative;
+}
+
+#game-map {
+  width: 768px;
+  height: 768px;
+}
+
+#user-mana > span {
+  position: absolute;
+  z-index: 1;
+  top: 12px;
+  width: 100%;
+  text-align: center;
+}
+
+#messages {
+  position: relative;
+  height: 220px;
+  overflow-y: scroll;
+}
+
+#error-message {
+  background-color: #c00;
+  padding: 4px 8px;
+
+  &.hidden {
+    display: none;
+  }
+}
+
+.item-slot {
+  position: relative;
+  height: 80px;
+  width: 80px;
+}
+
+.paintball {
+  transform: scale(5);
+  position: absolute;
+  top: 30px;
+  left: 33px;
+  filter: grayscale(0.8);
+}
+
+.stats-base {
+  > span {
+    position: absolute;
+    left: 10px;
+    width: 60px;
+    color: #ccc;
+  }
+
+  > :nth-child(1) {
+    top: 38px;
+    font-size: 11px;
+    text-align: left;
+  }
+
+  > :nth-child(2) {
+    top: 54px;
+    font-size: 11px;
+    text-align: left;
+  }
+
+  > .radius-value {
+    top: 38px;
+    text-align: right;
+  }
+
+  > .mana-value {
+    top: 54px;
+    text-align: right;
+  }
+}
+
+.homepage-scoreboard {
+  height: 240px;
+  overflow-y: scroll;
+}
+
+.active {
+  .paintball {
+    filter: grayscale(0);
+  }
+
+  .stats-base > span {
+    color: #fff;
+  }
+}
+
+div.hidden {
+  .paintball {
+    display: none;
+  }
+
+  .stats-base {
+    display: none;
+  }
+}

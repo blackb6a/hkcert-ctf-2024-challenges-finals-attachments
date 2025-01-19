@@ -1,0 +1,333 @@
+<html>
+    <head>
+        <!-- 
+            Typically you should not change the URL involved to make the calls, as our checker would not follow so.
+            However, you may change the content of this file to handle other issues.
+        -->
+        <meta charset="utf-8">
+        <meta name="referrer" content="no-referrer">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Super Private Chat</title>
+        <style>
+            body {
+                font-family: Roboto, Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #f4f4f9;
+                color: #333;
+                line-height: 1.6;
+            }
+            h1, h2, h3 {
+                text-align: center;
+                color: #4CAF50;
+            }
+            .container {
+                max-width: 800px;
+                margin: 2rem auto;
+                padding: 1rem;
+                background-color: white;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+            input[type="text"], select {
+                width: calc(100% - 20px);
+                padding: 10px;
+                margin: 0.5rem 0;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                font-size: 1rem;
+            }
+            button {
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                font-size: 1rem;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+            button:hover {
+                background-color: #45a049;
+            }
+            #message_list {
+                max-height: 400px;
+                overflow-y: auto;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                padding: 10px;
+                background-color: #f9f9f9;
+                margin-top: 1rem;
+            }
+            #txt_status {
+                display: block;
+                margin-top: 1rem;
+                font-weight: bold;
+            }
+            #txt_status.success {
+                color: #4CAF50;
+            }
+            #txt_status.error {
+                color: #E74C3C;
+            }
+        </style>
+        <style>
+            .card {
+                width: 100%;
+                border-radius: 4px;
+                margin: 10px 0;
+            }
+            
+            .lv1 {
+                --header: rgba(21,101,192,1); 
+                --content: rgba(30,136,229,1);
+                --name-color: rgba(255,255,255,0.701961);  
+                --msg-color: rgba(255,255,255,1);
+            }
+            .lv2 {
+                --header: rgba(0,184,212,1); 
+                --content: rgba(0,229,255,1);
+                --name-color: rgba(0,0,0,0.701961); 
+                --msg-color: rgba(0,0,0,1);
+            }
+            .lv3 {
+                --header: rgba(0,191,165,1);
+                --content: rgba(29,233,182,1);
+                --name-color: rgba(0,0,0,0.541176); 
+                --msg-color: rgba(0,0,0,1); 
+            }
+            .lv4 {
+                --header: rgba(255,179,0,1); 
+                --content: rgba(255,202,40,1); 
+                --name-color: rgba(0,0,0,0.541176);  
+                --msg-color: rgba(0,0,0,0.87451); 
+            }
+            .lv5 {
+                --header: rgba(230,81,0,1);
+                --content: rgba(245,124,0,1); 
+                --name-color: rgba(255,255,255,0.701961);  
+                --msg-color: rgba(255,255,255,0.87451); 
+            }
+            .lv6 {
+                --header: rgba(194,24,91,1);
+                --content: rgba(233,30,99,1);
+                --name-color: rgba(255,255,255,0.701961);  
+                --msg-color: rgba(255,255,255,1);
+            }
+            .lv7 {
+                --header: rgba(208,0,0,1);
+                --content: rgba(230,33,23,1);
+                --name-color: rgba(255,255,255,0.701961); 
+                --msg-color: rgba(255,255,255,1); 
+            }
+            .member {
+                --header: #0f9d58;
+                --name-color: white;  
+            }
+            .photo {
+                display: inline-block;
+                vertical-align: bottom;
+                width: 40px;
+                height: 40px;
+                border-radius: 20px;
+                margin-right: 16px;
+                background-color: lightgray;
+            }
+            .header {
+                vertical-align: middle;
+                display: block;
+                padding: 8px 16px;
+                font-weight: bold;
+                font-weight: 500;
+                background: var(--header);
+                border-top-left-radius: 4px;
+                border-top-right-radius: 4px;
+            }
+            .header-content {
+                display: inline-block;
+            }
+            .author-name {
+                color: var(--name-color);
+                font-size: 14px;
+            }
+            .purchase-amount {
+                color: var(--msg-color);
+                font-size: 15px;
+            }
+            .header-subtext {
+                color: rgba(255, 255, 255, 0.7);
+                font-size: 15px;
+                margin: 2px 0px 0px;
+            }
+            .content {
+                color: var(--msg-color);
+                font-size: 15px;
+                padding: 8px 16px;
+                background: var(--content);
+                border-bottom-left-radius: 4px;
+                border-bottom-right-radius: 4px;
+            }
+            .content a {
+                color: var(--msg-color);
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Super Private Chat</h1>
+        <div class="container">
+            <h2>Post Your Message</h2>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name">
+            <label for="message">Message:</label>
+            <input type="text" id="message" name="message" placeholder="Type your message">
+            <label for="level">Purchase Amount:</label>
+            <select id="level" name="level">
+                <option value="2" selected>HK$13.37</option>
+                <option value="4">HK$73.31</option>
+                <option value="7">HK$713.37</option>
+            </select>
+            <button id="btn_post">Post</button>
+            <span id="txt_status"></span>
+            <h2>Recent Messages</h2>
+            <button id="btn_refresh">Refresh</button>
+            <div id="message_list"></div>
+        </div>
+        <h3 style="text-align: center;">Proudly Powered by PHP!</h3>
+        <script>
+            refresh();
+            function refresh() {
+                fetch("/post.php")
+                .then(response => response.json())
+                .then(content => {
+                    var message_list = document.getElementById("message_list");
+                    message_list.textContent = "";
+                    if (content.length === 0) {
+                        message_list.innerHTML = "No Recent Messages.";
+                    }
+                    for (const entry of content) {
+                        var div = document.createElement("div");
+                        div.className = "card";
+                        div.classList.add("lv" + entry["level"]);
+                        var div_header = document.createElement("div");
+                        div_header.className = "header";
+                        {
+                            // var img = document.createElement("img");
+                            var img = document.createElement("div");
+                            img.className = "photo";
+                            div_header.appendChild(img);
+                        }
+                        {
+                            var div_header_content = document.createElement("div");
+                            div_header_content.className = "header-content";
+                            {
+                                var div_author_name = document.createElement("div");
+                                div_author_name.className = "author-name";
+                                div_author_name.innerHTML = entry["name"];
+                                div_header_content.appendChild(div_author_name);
+                            }
+                            {
+                                var div_purchase_amount = document.createElement("div");
+                                div_purchase_amount.className = "purchase-amount";
+                                div_purchase_amount.innerHTML = {
+                                    2: "HK$13.37",
+                                    3: "HK$31.33",
+                                    4: "HK$73.31",
+                                    5: "HK$133.37",
+                                    6: "HK$313.37",
+                                    7: "HK$713.37",
+                                }[entry.level];
+                                div_header_content.appendChild(div_purchase_amount);
+                            }
+                            div_header.appendChild(div_header_content);
+                        }
+                        div.appendChild(div_header);
+                        var div_content = document.createElement("div");
+                        div_content.className = "content";
+                        {
+                            const a = document.createElement("a");
+                            a.onclick = function() {
+                                get(a, entry["name"], entry["level"]);
+                            }
+                            a.textContent = "Click to View";
+                            a.href = "#";
+                            div_content.appendChild(a);
+                        }
+                        div.appendChild(div_content);
+                        message_list.appendChild(div);
+                    }
+                });
+            }
+            function post() {
+                var name = document.getElementById("name").value;
+                var message = document.getElementById("message").value;
+                var level = document.getElementById("level").value;
+                var txt_status = document.getElementById("txt_status");
+                fetch(`/post.php?name=${name}&message=${message}&level=${level}`, {method: "POST"})
+                .then(response => {
+                    if (!response.ok) {
+                        throw response.text();
+                    }
+                    return response.text();
+                })
+                .then(content => {
+                    txt_status.className = "success";
+                    txt_status.innerHTML = `Success! The access token is ${content}`;
+                    refresh();
+                })
+                .catch(error => error.then(content => {
+                    txt_status.className = "error";
+                    txt_status.innerHTML = `Error! ${content}`;
+                }));
+            }
+            function get(target, name, level) {
+                var access_token = null;
+                var url = null;
+                if (level == 2) {
+                    url = `/post.php?name=${name}&level=${level}`;
+                } else {
+                    access_token = prompt("Enter Access Token:");
+                    if (access_token.length !== 32) {
+                        alert("Access Token should contain 32 characters!");
+                        return;
+                    }
+                    url = `/post.php?name=${name}&level=${level}&token=${access_token}`;
+                }
+                if (level == 2) {
+                    fetch(url)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw response.text();
+                        }
+                        return response.text();
+                    })
+                    .then(content => target.outerHTML = decodeURIComponent(content))
+                    .catch(error => error.then(content => {
+                        alert(`Error! ${content}`);
+                    }));
+                } else if (level == 4) {
+                    fetch(url)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw response.text();
+                        }
+                        return response.text();
+                    })
+                    .then(content => target.outerHTML = decodeURIComponent(content))
+                    .catch(error => error.then(content => {
+                        alert(`Error! ${content}`);
+                    }));
+                } else {
+                    var parent = target.parentElement;
+                    parent.innerHTML = "";
+                    var img = document.createElement("img");
+                    img.src = url;
+                    img.height = 200;
+                    img.style.imageRendering = "pixelated";
+                    parent.appendChild(img);
+                }
+            }
+            document.getElementById("btn_post").addEventListener("click", post);
+            document.getElementById("btn_refresh").addEventListener("click", refresh);
+        </script>
+    </body>
+</html>

@@ -1,0 +1,51 @@
+{
+  http_port 80
+  https_port 443
+  auto_https disable_redirects
+}
+
+:80, :443
+
+tls internal {
+  on_demand
+}
+
+rate_limit {
+	distributed
+	zone dynamic_example {
+		key    {remote_host}
+		events 100
+		window 5s
+	}
+}
+
+log {
+  format json
+}
+
+reverse_proxy	{
+  to playerweb:80
+  header_up User-Agent "caddy"
+  header_up Accept "*/*"
+  header_up -Accept-Encoding
+  header_up -Accept-Language
+  header_up -Cache-Control
+  header_up -Priority
+  header_up -Sec-Ch-Ua
+  header_up -Sec-Ch-Ua-Mobile
+  header_up -Sec-Ch-Ua-Platform
+  header_up -Sec-Fetch-Dest
+  header_up -Sec-Fetch-Mode
+  header_up -Sec-Fetch-Site
+  header_up -Sec-Fetch-User
+  header_up -Upgrade-Insecure-Requests
+  header_up -Dnt
+  header_up -Sec-Gpc
+  header_up -Te
+  header_up -Trailer
+  header_up -Transfer-Encoding
+  header_up -Referer
+  header_up -X-Forwarded-For
+  header_up -X-Forwarded-Host
+  header_up -X-Forwarded-Proto
+}

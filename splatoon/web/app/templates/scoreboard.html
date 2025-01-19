@@ -1,0 +1,31 @@
+{% extends "base/layout.html" %}
+
+{% block scripts %}
+<script src="/custom/scoreboard.js"></script>
+{% endblock %}
+{% block title %}Scoreboard{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-8">
+      <div id="game-map-container" class="rpgui-container framed">
+        <img class="rpgui-cursor-point" id="game-map">
+      </div>
+    </div>
+    <div class="col-4">
+      <div id="scoreboard-container" class="rpgui-container framed-golden">
+        <table style="width: 100%;">
+          <thead>
+            <tr>
+              <th><span>Team</span></th>
+              <th><span>Score</span></th>
+            </tr>
+          </thead>
+          <tbody id="scoreboard-data"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

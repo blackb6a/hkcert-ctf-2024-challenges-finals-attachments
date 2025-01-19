@@ -1,0 +1,50 @@
+{% extends "base/layout.html" %}
+
+{% block scripts %}
+<script src="/custom/homepage.js"></script>
+{% endblock %}
+
+{% block title %}Index{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-8">
+      <div id="game-map-container" class="rpgui-container framed">
+        <img class="rpgui-cursor-point" id="game-map" onclick="throwPaintball(event)">
+      </div>
+    </div>
+    <div class="col-4">
+      <div id="inventory-container" class="rpgui-container framed-golden">
+        <p class="text-center" id="user-name"></p>
+
+        <div id="user-mana" class="rpgui-progress blue">
+          <span>0</span>
+        </div>
+
+        <hr />
+
+        <div class="text-right"><span>Inventory</span></div>
+        <div id="inventory" class="text-center"></div>
+        <div id="error-message" class="hidden"><span></span></div>
+      </div>
+
+      <div id="scoreboard-container" class="rpgui-container framed-golden homepage-scoreboard">
+        <table style="width: 100%;">
+          <tbody id="scoreboard-data"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div id="messages-container" class="rpgui-container framed my-2">
+        <h1>Messages</h1>
+        <div id="messages" class="rpgui-container framed-grey"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<input id="selected-paintball" style="display: none;">
+{% endblock %}

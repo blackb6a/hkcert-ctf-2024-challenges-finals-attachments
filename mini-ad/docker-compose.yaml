@@ -1,0 +1,54 @@
+services:
+  proxy:
+    container_name: proxy
+    hostname: proxy
+    build: proxy
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      default:
+      team:
+        ipv4_address: 10.0.1.10
+    restart: unless-stopped
+  playerweb:
+    container_name: playerweb
+    hostname: playerweb
+    build: playerweb
+    read_only: true
+    tmpfs:
+      - /run
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: '512M'
+    volumes:
+      - ./data/var_www_html:/var/www/html
+      - ./data/var_log_apache2:/var/log/apache2/
+    networks:
+      team:
+        ipv4_address: 10.0.1.20
+    restart: unless-stopped
+  playerssh:
+    container_name: playerssh
+    hostname: playerssh
+    build: playerssh
+    volumes:
+      - ./configs/authorized_keys:/authorized_keys:ro
+      - ./data/var_www_html:/var_www_html
+      - ./data/var_log_apache2:/var_log_apache2
+    ports:
+      - 2222:2222
+    networks:
+      default:
+      team:
+        ipv4_address: 10.0.1.30
+    restart: unless-stopped
+networks:
+  team:
+    internal: true
+    ipam:
+      driver: default
+      config:
+        - subnet: "10.0.1.0/24"

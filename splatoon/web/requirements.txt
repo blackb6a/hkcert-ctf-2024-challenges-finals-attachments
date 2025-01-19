@@ -1,0 +1,7 @@
+flask==2.3.3
+gunicorn==22.0.0
+requests==2.32.3
+Pillow==11.1.0
+flask-limiter==3.10.0
+crc==7.1.0
+Flask-Caching==2.3.0

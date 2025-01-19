@@ -1,0 +1,44 @@
+#!/bin/sh
+###################################################
+# Usage: serversideup-create-unprivileged-user [username] [PUID] [PGID]
+###################################################
+script_name="serversideup-create-unprivileged-user"
+
+############
+# Sanity checks
+############
+if [ $# -ne 3 ]; then
+    echo "🛑 ERROR ($script_name): Invalid number of arguments."
+    exit 1
+fi
+
+############
+# Variables
+############
+username="$1"
+PUID="$2"
+PGID="$3"
+
+############
+# Main
+############
+if [ -f /etc/alpine-release ]; then
+    # Alpine
+    addgroup -g "${PGID}" "${username}" && \
+    adduser -u "${PUID}" -G "${username}" -h "/home/${username}" -s /bin/sh -D "${username}"
+else
+    # Debian
+    groupadd -g "${PGID}" "${username}" && \
+    useradd --no-log-init \
+            -m \
+            -s /bin/bash \
+            -d "/home/${username}" \
+            -u "${PUID}" \
+            -g "${PGID}" \
+            "${username}"
+fi
+
+# Set a proper password hash that allows SSH key auth but prevents password login
+# '*' allows the account to be active but prevents password login
+# This works the same way on both Alpine and Debian
+usermod -p '*' "${username}"

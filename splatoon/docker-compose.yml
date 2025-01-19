@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  web:
+    build:
+      context: ./web
+    volumes:
+      - ./files:/tmp
+    ports:
+      - 5000:80

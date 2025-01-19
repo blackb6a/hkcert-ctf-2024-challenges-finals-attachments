@@ -1,0 +1,24 @@
+{% extends "base/layout.html" %}
+
+{% block scripts %}
+<script src="/custom/login.js"></script>
+{% endblock %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-6 offset-3">
+      <div class="rpgui-container framed-golden rpgui-center" style="position: relative;">
+        <h1>Login</h1>
+        <hr>
+        <form onsubmit="doLogin(event)">
+          <input id="token" placeholder="Team Token">
+          <button type="submit" class="rpgui-button rpgui-cursor-point"><span>Login</span></button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

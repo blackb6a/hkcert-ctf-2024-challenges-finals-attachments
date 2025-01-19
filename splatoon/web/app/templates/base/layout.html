@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.2.3/purify.min.js"
+    integrity="sha512-Ll+TuDvrWDNNRnFFIM8dOiw7Go7dsHyxRp4RutiIFW/wm3DgDmCnRZow6AqbXnCbpWu93yM1O34q+4ggzGeXVA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"
+    integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="/rpgui/rpgui.min.js"></script>
+  <script src="/custom/common.js"></script>
+  {% block scripts %}{% endblock %}
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"
+    integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href='https://fonts.googleapis.com/css?family=Press+Start+2P' rel='stylesheet' type='text/css'>
+  <link href="/rpgui/rpgui.min.css" rel="stylesheet">
+  <link href="/custom/style.css" rel="stylesheet">
+
+  <title>{% block title %}{% endblock %} - Splatoon</title>
+</head>
+
+<body>
+  <div class="rpgui-content">
+    <div class="container">
+      <div class="row py-2">
+        <div class="col-12">
+          <div class="rpgui-container framed rpgui-center" style="position: relative;">
+            <button id="play-button" type="button" class="rpgui-button rpgui-cursor-point" onclick="window.location = '/'"><span>Play!</span></button>
+            <button id="login-button" type="button" class="rpgui-button rpgui-cursor-point hidden" onclick="window.location = '/login/'"><span>Login</span></button>
+            <button id="scoreboard-button" type="button" class="rpgui-button rpgui-cursor-point" onclick="window.location = '/scoreboard/'"><span>Scoreboard</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% block content %}{% endblock %}
+  </div>
+</body>
+
+</html>
